@@ -2,7 +2,7 @@ import time
 from django import forms
 from django.forms.util import ErrorDict
 from django.conf import settings
-import settings as app_settings
+from appsettings import ALLOW_DUPLICATES
 from django.contrib.contenttypes.models import ContentType
 from django.utils.crypto import salted_hmac, constant_time_compare
 from django.utils.encoding import force_text
@@ -115,7 +115,7 @@ class CommentDetailsForm(CommentSecurityForm):
 
         CommentModel = self.get_comment_model()
         new = CommentModel(**self.get_comment_create_data())
-        if not app_settings.ALLOW_DUPLICATES:
+        if not ALLOW_DUPLICATES:
             new = self.check_for_duplicate_comment(new)
 
         return new
