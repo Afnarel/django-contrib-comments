@@ -2,7 +2,7 @@ import time
 from django import forms
 from django.forms.util import ErrorDict
 from django.conf import settings
-from appsettings import ALLOW_DUPLICATES
+from .appsettings import ALLOW_DUPLICATES
 from django.contrib.contenttypes.models import ContentType
 from django.utils.crypto import salted_hmac, constant_time_compare
 from django.utils.encoding import force_text
