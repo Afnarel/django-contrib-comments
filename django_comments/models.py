@@ -30,6 +30,7 @@ class BaseCommentAbstractModel(models.Model):
     site = models.ForeignKey(Site)
 
     class Meta:
+        app_label = 'django_comments'
         abstract = True
 
     def get_content_object_url(self):
@@ -186,6 +187,7 @@ class CommentFlag(models.Model):
     MODERATOR_APPROVAL = "moderator approval"
 
     class Meta:
+        app_label = 'django_comments'
         db_table = 'django_comment_flags'
         unique_together = [('user', 'comment', 'flag')]
         verbose_name = _('comment flag')
