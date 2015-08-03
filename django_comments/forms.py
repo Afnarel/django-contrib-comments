@@ -1,6 +1,9 @@
 import time
 from django import forms
-from django.forms.util import ErrorDict
+try:
+    from django.forms.utils import ErrorDict
+except ImportError:  # Django < 1.8
+    from django.forms.util import ErrorDict
 from django.conf import settings
 from .appsettings import ALLOW_DUPLICATES
 from django.contrib.contenttypes.models import ContentType
