@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.core import urlresolvers
@@ -7,6 +6,16 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
+import django
+
+"""
+GenericForeignKey moves from generic to fields in django 1.9 and in 1.8 shows
+deprecation warnings
+"""
+if django.VERSION >= (1, 8):
+    from django.contrib.contenttypes.fields import GenericForeignKey
+else:
+    from django.contrib.contenttypes.generic import GenericForeignKey
 
 from django_comments.managers import CommentManager
 
@@ -24,7 +33,7 @@ class BaseCommentAbstractModel(models.Model):
             verbose_name=_('content type'),
             related_name="content_type_set_for_%(class)s")
     object_pk = models.TextField(_('object ID'))
-    content_object = generic.GenericForeignKey(ct_field="content_type", fk_field="object_pk")
+    content_object = GenericForeignKey(ct_field="content_type", fk_field="object_pk")
 
     # Metadata about the comment
     site = models.ForeignKey(Site)
